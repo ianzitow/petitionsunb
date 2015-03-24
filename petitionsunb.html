@@ -1,23 +1,144 @@
 <head>
-  <title>petitionsunb</title>
+  <title>Abaixo Assinado</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+<div class="container" style="margin-top: 20px;">
 
-  {{> hello}}
-  {{> sign}}
+    <!--<div class="row">-->
+        <!--<div class="col-md-8">-->
+            <!--<div class="panel panel-primary">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h3 class="panel-title">Abaixo Assinado</h3>-->
+                <!--</div>-->
+                <!--<div class="panel-body">-->
+                    <!--<p>O DCE UnB Honestino Guimarães, Gestão Aliança pela Liberdade, sempre tratou a segurança como prioridade. Entendemos que a segurança não se resume somente à presença da polícia militar no campus, mas passa também por outras medidas, como a melhoria da iluminação.</p>-->
+                    <!--<p>A Universidade comprou e já está instalando 500 postes de luz em todo o Campus Darcy Ribeiro, visando ajudar na segurança dos alunos. Entretanto,  é preciso um esforço do Governo do Distrito Federal para que as iluminações nos arredores do Darcy Ribeiro acompanhem a melhoria da iluminação dentro dele.</p>-->
+                    <!--<p>Portanto, buscando atender a demanda de mais 40000 estudantes estamos fazendo um abaixo assinado pedindo a instalação de postes de iluminação entre a L3 e L2 norte. Até o momento, {{counter}} estudantes já assinaram nossa petição.</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-4">-->
+            <!--<form class="form-horizontal">-->
+                <!--<fieldset>-->
+                    <!--<legend>Assinar</legend>-->
+                    <!--{{>errors}}-->
+                    <!--{{>successes}}-->
+                    <!--{{> sign}}-->
+                <!--</fieldset>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="jumbotron col-md-7">
+        <h1>Abaixo Assinado</h1>
+        {{>fblike}}
+        <p>O DCE UnB Honestino Guimarães, Gestão Aliança pela Liberdade, sempre tratou a segurança como prioridade. Entendemos que a segurança não se resume somente à presença da polícia militar no campus, mas passa também por outras medidas, como a melhoria da iluminação.</p>
+        <p>A Universidade comprou e já está instalando 500 postes de luz em todo o Campus Darcy Ribeiro, visando ajudar na segurança dos alunos. Entretanto,  é preciso um esforço do Governo do Distrito Federal para que as iluminações nos arredores do Darcy Ribeiro acompanhem a melhoria da iluminação dentro dele.</p>
+        <p>Portanto, buscando atender a demanda de mais 40000 estudantes estamos fazendo um abaixo assinado pedindo a instalação de postes de iluminação entre a L3 e L2 norte. Até o momento, {{totalCount}} estudantes já assinaram nossa petição.</p>
+        <div class="progress" style="height: 7px;">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{totalCount}}" aria-valuemin="0" aria-valuemax="1000" style="width:{{divideUp totalCount}}%">
+                <span class="sr-only">{{totalCount}}%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+      {{>errors}}
+      {{>successes}}
+      {{> sign}}
+        <h3>Lista de Assinaturas <small>Últimas {{counter}} assinaturas</small></h3>
+        {{#each signatures}}
+            {{> signature}}
+        {{/each}}
+    </div>
+  <div class="col-md-10 col-md-offset-1">
+
+
+      <!--<table class="table table-bordered">-->
+          <!--<thead>-->
+          <!--<tr>-->
+              <!--<th>Matrícula</th>-->
+              <!--<th>Nome</th>-->
+              <!--<th>Curso</th>-->
+              <!--<th>Hora</th>-->
+          <!--</tr>-->
+          <!--</thead>-->
+          <!--<tbody>-->
+
+          <!--</tbody>-->
+      <!--</table>-->
+  </div>
+
+</div>
+
 </body>
-
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
 
 <template name="sign">
     <form class="new-signature">
-        <input type="text" name="inputMatricula" placeholder="Matrícula" />
-        <input type="text" name="inputSenha" placeholder="Senha" />
-        <input type="submit" value="Submit" />
+        <legend>Formulário</legend>
+        <div class="form-group">
+            <label for="matricula" class="col-lg-2 control-label">Matrícula</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="matricula" name="inputMatricula" placeholder="Somente números">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="senha" class="col-lg-2 control-label">Senha</label>
+            <div class="col-lg-10">
+                <input type="password" class="form-control" id="senha" name="inputSenha" placeholder="Digite sua senha">
+            </div>
+        </div>
+        <div class="col-lg-10 col-lg-offset-2">
+            <button type="submit" class="btn btn-success" value="Submit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Assinar</button>
+        </div>
     </form>
+</template>
+
+<template name="signature">
+    <h6><span class="label label-default">{{shortIt _id 6}}</span> {{nome}} • {{curso}} <small>{{timeAgo createdAt}}</small></h6>
+</template>
+
+<template name="errors">
+    <div class="errors">
+      {{#each errors}}
+        {{> error}}
+      {{/each}}
+    </div>
+</template>
+
+<template name="error">
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{message}}
+    </div>
+</template>
+
+<template name="successes">
+    <div class="successes">
+      {{#each successes}}
+        {{> success}}
+      {{/each}}
+    </div>
+</template>
+
+<template name="success">
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{message}}
+    </div>
+</template>
+
+<template name="fblike">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=476434379073571&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <div class="fb-like" data-href="http://abaixoassinado.liberdadeunb.org/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 </template>

@@ -5,8 +5,11 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
-insecure
 accounts-base
 accounts-facebook
 http
+ian:accounts-ui-bootstrap-3
+twbs:bootstrap
+momentjs:moment
+fezvrasta:bootstrap-material-design
+tmeasday:publish-counts
